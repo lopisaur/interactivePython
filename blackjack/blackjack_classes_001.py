@@ -106,6 +106,12 @@ class Deck:
             t += str(c) + " "
         return s + t
 
+    def isEmpty(self):
+        if len(self.cardlist) == 0:
+            return True
+        else:
+            return False
+
 
 def deal():
     # TODO: Remove debug printing
@@ -135,29 +141,24 @@ def deal():
 
 
 def hit():
-    # FIXME: This one never goes bust.
     # TODO: Remove debug printing
     """
     If hand is in play, hit player. If busted, assign message to outcome, update in_play and score.
     """
     global in_play, outcome, score
-    p = player_hand.get_value()
-    if in_play:
-        if p <= 21:
-            player_hand.add_card(deck.deal_card())
-            print "Player", p
-            if p > 21:
-                outcome = "You have busted."
-                in_play = False
-                score -= 1
-                # print "Player", p
-                print outcome, score
-    if p > 21:
-        outcome = "You have busted."
-        in_play = False
-        score -= 1
-        # print "Player", p
-        print outcome, score
+    if in_play and len(deck.cardlist) > 0:
+        player_hand.add_card(deck.deal_card())
+        if player_hand.get_value() <= 21:
+            print str(player_hand)
+            print "Player", player_hand.get_value()
+            print outcome, score
+        else:
+            outcome = "You have busted."
+            in_play = False
+            score -= 1
+            print str(player_hand)
+            print "Player", player_hand.get_value()
+            print outcome, score
 
 
 def stand():
@@ -176,7 +177,7 @@ def stand():
         print "Player", p
         print outcome, score
     else:
-        while d < 17:
+        while d < 17 and len(deck.cardlist) > 0: #not deck.isEmpty():
             dealer_hand.add_card(deck.deal_card())
             print "Dealer", d
         if d > 21:
@@ -201,15 +202,20 @@ print "-----------"
 print "Testing"
 
 #player_hand.add_card(deck.deal_card())
-#print deck
+print deck
+print str(player_hand)
+print "Player", player_hand.get_value()
+print str(dealer_hand)
+print "Dealer", dealer_hand.get_value()
+print "-----------"
+#player_hand.add_card(Card("S", "A"))
+#print str(player_hand)
 #print "Player", player_hand.get_value()
-#print "Dealer", dealer_hand.get_value()
-#print "-----------"
-#print "Hitting"
-#hit()
-#print "Player", str(player_hand)
-#print "Player", player_hand.get_value()
-#print outcome, score
+print "Hitting"
+hit()
+print "Player", str(player_hand)
+print "Player", player_hand.get_value()
+print outcome, score
 #print "-----------"
 #print "Standing"
 #stand()
