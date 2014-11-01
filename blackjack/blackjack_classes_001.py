@@ -135,7 +135,7 @@ def deal():
 
 
 def hit():
-    # FIXME: This fucker never goes bust.
+    # FIXME: This one never goes bust.
     # TODO: Remove debug printing
     """
     If hand is in play, hit player. If busted, assign message to outcome, update in_play and score.
